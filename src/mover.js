@@ -30,7 +30,7 @@ function swapItemsDom(a, b) {
 }
 
 function swapItemsAnimate(a, b) {
-	let time = 500;
+	let time = 2000;
 	let aEl = $(getList()[a]).find('.item');
 	let bEl = $(getList()[b]).find('.item');
 
@@ -40,8 +40,32 @@ function swapItemsAnimate(a, b) {
 	bEl.animate({top: '-=' + offsetTop + 'px', left: '-=' + offsetLeft + 'px'}, time, 'swing', () => swapItemsDom(a, b));
 }
 
+function swap(a, b) {
+	$('').delay(2000).promise().done(() => {
+		console.log(a, b);
+		var temp = arr[a];
+		arr[a] = arr[b];
+		arr[b] = temp;
+	});
+
+	swapItemsAnimate(a, b);
+}
+
+function bubbleSort(a) {
+	var swapped;
+	do {
+		swapped = false;
+		for (var i=0; i < a.length-1; i++) {
+			if (a[i] > a[i+1]) {
+				swap(i, i+1);
+				swapped = true;
+			}
+		}
+	} while (swapped);
+}
+
 createList(arr);
 
 setTimeout(() => {	
-	swapItemsAnimate(0, 3)
+	bubbleSort(arr);
 }, 2000);
